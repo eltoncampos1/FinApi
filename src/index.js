@@ -110,6 +110,21 @@ app.get("/statement/date", verifyIfExistAccountCPF, (request, response) => {
   return response.json(statement);
 });
 
+app.put("/account", verifyIfExistAccountCPF, (request, response) => {
+  const { name } = request.body;
+  const { customer } = request;
+
+  customer.name = name;
+
+  return response.status(201).send();
+});
+
+app.get("/account", verifyIfExistAccountCPF, (request, response) => {
+  const { customer } = request;
+
+  return response.json(customer);
+});
+
 app.listen(3333, () => {
   console.log("Server is running");
 });
