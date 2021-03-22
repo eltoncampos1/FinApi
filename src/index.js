@@ -125,6 +125,14 @@ app.get("/account", verifyIfExistAccountCPF, (request, response) => {
   return response.json(customer);
 });
 
+app.delete("/account", verifyIfExistAccountCPF, (request, response) => {
+  const { customer } = request;
+
+  customers.splice(customer, 1);
+
+  return response.status(200).json(customers);
+});
+
 app.listen(3333, () => {
   console.log("Server is running");
 });
