@@ -4,16 +4,23 @@ const { v4: uuid } = require("uuid");
 const app = express();
 app.use(express.json());
 
-const costumers = [];
+const customers = [];
 
 app.post("/account", (request, response) => {
   const { cpf, name } = request.body;
-  const id = uuid();
 
-  costumers.push({
+  const customerAlreadExists = customers.some(
+    (customer) => customer.cpf === cpf
+  );
+
+  if (customerAlreadExists) {
+    return response.status(400).json({ error: "Customer already exists." });
+  }
+
+  customers.push({
     cpf,
     name,
-    id,
+    id: uuid(),
     statement: [],
   });
 
